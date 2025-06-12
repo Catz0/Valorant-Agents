@@ -2,32 +2,60 @@
 <html>
 <head>
   <title>{{ agent.displayName }}</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      margin: 20px;
+      background-color: #f9fafa;
+      color: #111823;
+    }
+    a {
+      text-decoration: none;
+      color: #ff4654;
+      font-weight: bold;
+    }
+    .ability-card {
+      margin-bottom: 10px;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 15px 0;
+    }
+  </style>
 </head>
 <body>
-  <a href="/">← Back to Agents</a>
+  <a href="{{ url_for('index', lang=current_lang) }}"> {{ labels.back }}</a>
   <h1>{{ agent.displayName }}</h1>
-  <img src="{{ agent.fullPortrait }}" width="350">
-  <p><strong>Role:</strong> {{ agent.role.displayName if agent.role else 'No Role' }}</p>
-    <hr class="divider">
 
-  <h2>Abilities</h2>
+  {% if agent.fullPortrait %}
+    <img src="{{ agent.fullPortrait }}" width="350" alt="{{ agent.displayName }}">
+  {% else %}
+    <p>No portrait available.</p>
+  {% endif %}
+
+  <p><strong>{{ labels.role }}:</strong> {{ agent.role.displayName if agent.role else 'No Role' }}</p>
+
+  <h2>{{ labels.abilities }}</h2>
   <div class="abilities">
-  {% for ability in agent.abilities if ability.slot != "Passive" %}
-    <div class="ability-card">
-      <h3>{{ ability.displayName }}</h3>
-      <p>{{ ability.description }}</p>
-    </div>
-    {% if not loop.last %}
-      <hr class="ability-divider">
-    {% endif %}
-  {% endfor %}
+    {% for ability in agent.abilities %}
+      {% if ability.slot != "Passive" %}
+        <div class="ability-card">
+          <h3>{{ ability.displayName }}</h3>
+          <p>{{ ability.description }}</p>
+        </div>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   </div>
-<hr class="ability-divider">
+
+  <h2>{{ labels.backstory }}</h2>
   {% if agent.description %}
-  <h2>Backstory</h2>
-  <p>{{ agent.description }}</p>
-{% else %}
-  <p>No backstory available.</p>
-{% endif %}
+    <p>{{ agent.description }}</p>
+  {% else %}
+    <p>{{ labels.no_backstory }}</p>
+  {% endif %}
 </body>
 </html>
