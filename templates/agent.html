@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ agent.displayName }}</title>
+</head>
+<body>
+  <a href="/">← Back to Agents</a>
+  <h1>{{ agent.displayName }}</h1>
+  <img src="{{ agent.fullPortrait }}" width="350">
+  <p><strong>Role:</strong> {{ agent.role.displayName if agent.role else 'No Role' }}</p>
+
+  <h2>Abilities</h2>
+  <ul>
+    {% for ability in agent.abilities %}
+    <li>
+      <strong>{{ ability.displayName }}:</strong> {{ ability.description }}
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

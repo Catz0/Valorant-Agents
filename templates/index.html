@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valorant Agents</title>
+    <head>
+  <style>
+    body {
+      background-color: 	#f9fafa; /* dark background */
+      color: 	#111823; /* text color so it's readable */
+      font-family: Georgia, serif;
+      margin: 0;
+      padding: 20px;
+    }
+  </style>
+</head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 2px solid #ddd;
+            padding: 1px;
+            text-align: left;
+        }
+        th {
+            background-color: #ff4654;
+            color: white;
+        }
+        img {
+            height: 75px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Valorant Agents</h1>
+
+    <!-- Optional: Search and Filter Form -->
+<form method="get">
+    <input type="text" name="search" placeholder="Search agents..." value="{{ search }}">
+    
+    <select name="role">
+        <option value="">All Roles</option>
+        <option value="Duelist" {% if current_role == 'Duelist' %}selected{% endif %}>Duelist</option>
+        <option value="Initiator" {% if current_role == 'Initiator' %}selected{% endif %}>Initiator</option>
+        <option value="Controller" {% if current_role == 'Controller' %}selected{% endif %}>Controller</option>
+        <option value="Sentinel" {% if current_role == 'Sentinel' %}selected{% endif %}>Sentinel</option>
+    </select>
+
+    <select name="lang">
+        <option value="en-US" {% if current_lang == 'en-US' %}selected{% endif %}>English (US)</option>
+    <option value="es-ES" {% if current_lang == 'es-ES' %}selected{% endif %}>Spanish (Spain)</option>
+    <option value="pt-BR" {% if current_lang == 'pt-BR' %}selected{% endif %}>Portuguese (Brazil)</option>
+    <option value="fr-FR" {% if current_lang == 'fr-FR' %}selected{% endif %}>French</option>
+    <option value="de-DE" {% if current_lang == 'de-DE' %}selected{% endif %}>German</option>
+    <option value="ja-JP" {% if current_lang == 'ja-JP' %}selected{% endif %}>Japanese</option>
+    <option value="ko-KR" {% if current_lang == 'ko-KR' %}selected{% endif %}>Korean</option>
+    <option value="zh-CN" {% if current_lang == 'zh-CN' %}selected{% endif %}>Chinese (Simplified)</option>
+    <option value="zh-TW" {% if current_lang == 'zh-TW' %}selected{% endif %}>Chinese (Traditional)</option>
+    <option value="ru-RU" {% if current_lang == 'ru-RU' %}selected{% endif %}>Russian</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Portrait</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agent in agents %}
+            <tr>
+                <td><img src="{{ agent['displayIconSmall'] }}" alt="{{ agent['displayName'] }}"></td>
+                <td>{{ agent['displayName'] }}</td>
+                <td>{{ agent['role']['displayName'] if agent['role'] else 'N/A' }}</td>
+                <td><a href="{{ url_for('agent_detail', uuid=agent['uuid'], lang=current_lang) }}">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
