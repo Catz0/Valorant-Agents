@@ -8,14 +8,26 @@
   <h1>{{ agent.displayName }}</h1>
   <img src="{{ agent.fullPortrait }}" width="350">
   <p><strong>Role:</strong> {{ agent.role.displayName if agent.role else 'No Role' }}</p>
+    <hr class="divider">
 
   <h2>Abilities</h2>
-  <ul>
-    {% for ability in agent.abilities %}
-    <li>
-      <strong>{{ ability.displayName }}:</strong> {{ ability.description }}
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="abilities">
+  {% for ability in agent.abilities if ability.slot != "Passive" %}
+    <div class="ability-card">
+      <h3>{{ ability.displayName }}</h3>
+      <p>{{ ability.description }}</p>
+    </div>
+    {% if not loop.last %}
+      <hr class="ability-divider">
+    {% endif %}
+  {% endfor %}
+  </div>
+<hr class="ability-divider">
+  {% if agent.description %}
+  <h2>Backstory</h2>
+  <p>{{ agent.description }}</p>
+{% else %}
+  <p>No backstory available.</p>
+{% endif %}
 </body>
 </html>
