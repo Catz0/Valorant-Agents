@@ -17,7 +17,7 @@ def index():
     # Filter agents by role
     if role:
         agents = [a for a in agents if a["role"] and a["role"]["displayName"].lower() == role.lower()]
-    # Filter agents by search query
+    # Filter agents by search
     if search:
         agents = [a for a in agents if search in a["displayName"].lower()]
 
