@@ -30,6 +30,7 @@
   {% endif %}
 
   <p><strong>{{ labels.role }}:</strong> {{ agent.role.displayName if agent.role else 'No Role' }}</p>
+  <hr>
 
   <h2>{{ labels.abilities }}</h2>
   <div class="abilities">
@@ -45,12 +46,15 @@
       {% endif %}
     {% endfor %}
   </div>
-
+  
+  <hr>
   <h2>{{ labels.backstory }}</h2>
+  
   {% if agent.description %}
     <p>{{ agent.description }}</p>
   {% else %}
     <p>{{ labels.no_backstory }}</p>
   {% endif %}
+
 </body>
 </html>
